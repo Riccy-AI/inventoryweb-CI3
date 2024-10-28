@@ -2,7 +2,7 @@
 
 class Supplier_model extends CI_Model
 {
-    public function getAllSupplier() 
+    public function getAllSupplier()
     {
         $query = $this->db->get('supplier');
         return $query->result_array();
@@ -10,13 +10,31 @@ class Supplier_model extends CI_Model
 
     public function tambahDataSupplier()
     {
-        $data = array(
+        $data = [
             'id_supplier' => $this->input->post('id_supplier', true),
             'nama_supplier' => $this->input->post('nama_supplier', true),
-            'alamat_supplier' => $this->input->post('alamat', true),
+            'alamat' => $this->input->post('alamat', true),
             'cp' => $this->input->post('cp', true)
-        );
+        ];
 
-        $this->db->insert('supplier', $data); 
+        return $this->db->insert('supplier', $data);
+    }
+
+    public function hapusDataSupplier($id_supplier)
+    {
+        $this->db->where('id_supplier', $id_supplier);
+        $this->db->delete('supplier');
+    }
+    
+    public function editDataSupplier($id_supplier)
+    {
+        $data = [
+            'id_supplier' => $this->input->post('id_supplier', true),
+            'nama_supplier' => $this->input->post('nama_supplier', true),
+            'alamat' => $this->input->post('alamat', true),
+            'cp' => $this->input->post('cp', true)
+        ];
+
+        return $this->db->replace('table', $data);
     }
 }

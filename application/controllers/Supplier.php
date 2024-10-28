@@ -6,42 +6,56 @@ class Supplier extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Alias model sesuai dengan penulisan yang benar (huruf kecil di awal)
-        $this->load->model('Supplier_model', 'supplier_model');
+        $this->load->model('Supplier_model', 'supplier_model'); // memastikan alias model benar
         $this->load->library('form_validation');
-        $this->load->library('session');
-        $this->load->helper('url');
-        
     }
 
     public function index()
     {
         $data['judul'] = 'Supplier';
-        $data['supplier'] = $this->supplier_model->getAllSupplier();
+        $data['supplier'] = $this->supplier_model->getAllSupplier(); // menggunakan alias model yang benar
         $this->load->view('templates/header', $data);
-        $this->load->view('supplier/index' , $data);
+        $this->load->view('supplier/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function tambah()
-{
-    $data['judul'] = 'Tambah Data Supplier';
-    $this->form_validation->set_rules('id_supplier', 'ID Supplier', 'required');
-    $this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'required');
-    $this->form_validation->set_rules('alamat', 'Alamat Supplier', 'required');
-    $this->form_validation->set_rules('cp', 'Nomor Supplier', 'required|numeric');
+    {
+        $data['judul'] = 'Tambah Data Supplier';
 
+        $this->form_validation->set_rules('id_supplier', 'ID Supplier', 'required');
+        $this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat Supplier', 'required');
+        $this->form_validation->set_rules('cp', 'Nomor Supplier', 'required|numeric');
 
-    if ($this->form_validation->run() == FALSE) {
-        $this->load->view('templates/header', $data);
-        $this->load->view('supplier/tambah');
-        $this->load->view('templates/footer');
-    } 
-
-    else {
-        $this->supplier_model->tambahDataSupplier(); 
-        $this->session->set_flashdata('flash', 'Ditambahkan');
-        redirect('supplier'); 
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('supplier/tambah', $data);
+            $this->load->view('templates/footer');
+        } 
+        else {
+            $this->supplier_model->tambahDataSupplier(); // menggunakan alias model yang benar
+            $this->session->set_flashdata('flash', 'Ditambahkan');
+            redirect('supplier');
+        }
     }
-}
+
+    public function hapus($id_supplier) 
+    {
+
+        $this->supplier_model->hapusDataSupplier($id_supplier);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('supplier');
+
+
+    }
+    public function edit($id_supplier) 
+    {
+
+        $this->supplier_model->editDataSupplier($id_supplier);
+        $this->session->set_flashdata('flash', 'Berhasil Diedit');
+        redirect('supplier');
+
+
+    }
 }
