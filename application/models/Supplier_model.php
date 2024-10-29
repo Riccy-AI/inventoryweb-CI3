@@ -25,8 +25,8 @@ class Supplier_model extends CI_Model
         $this->db->where('id_supplier', $id_supplier);
         $this->db->delete('supplier');
     }
-    
-    public function editDataSupplier($id_supplier)
+
+    public function getSupplierById($id_supplier)
     {
         $data = [
             'id_supplier' => $this->input->post('id_supplier', true),
@@ -34,7 +34,8 @@ class Supplier_model extends CI_Model
             'alamat' => $this->input->post('alamat', true),
             'cp' => $this->input->post('cp', true)
         ];
-
-        return $this->db->replace('table', $data);
+        $this->db->where('id_supplier', $id_supplier);
+        $this->db->update('supplier', $data);
+        return $this->db->get_where('supplier', ['id_supplier' => $id_supplier])->row_array();
     }
 }

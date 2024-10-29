@@ -32,30 +32,42 @@ class Supplier extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('supplier/tambah', $data);
             $this->load->view('templates/footer');
-        } 
-        else {
+        } else {
             $this->supplier_model->tambahDataSupplier(); // menggunakan alias model yang benar
             $this->session->set_flashdata('flash', 'Ditambahkan');
             redirect('supplier');
         }
     }
 
-    public function hapus($id_supplier) 
+    public function hapus($id_supplier)
     {
 
         $this->supplier_model->hapusDataSupplier($id_supplier);
-        $this->session->set_flashdata('flash', 'Dihapus');
+        $this->session->set_flashdata('flash', 'Di hapus');
         redirect('supplier');
-
-
     }
-    public function edit($id_supplier) 
+
+    public function edit($id_supplier)
     {
+        $data['judul'] = 'Edit Data Supplier';
+        $data['supplier'] = $this->supplier_model->getSupplierById($id_supplier);
 
-        $this->supplier_model->editDataSupplier($id_supplier);
-        $this->session->set_flashdata('flash', 'Berhasil Diedit');
-        redirect('supplier');
+        // Validasi input
+        $this->form_validation->set_rules('id_supplier', 'ID Supplier', 'required');
+        $this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat Supplier', 'required');
+        $this->form_validation->set_rules('cp', 'Nomor Supplier', 'required|numeric');
 
-
+        if ($this->form_validation->run() == FALSE) {
+            // Menampilkan halaman edit jika ada kesalahan
+            $this->load->view('templates/header', $data);
+            $this->load->view('supplier/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Memanggil model untuk memperbarui data supplier
+            $this->supplier_model->getSupplierById($id_supplier);
+            $this->session->set_flashdata('flash', 'Diubah');
+            redirect('supplier');
+        }
     }
 }
