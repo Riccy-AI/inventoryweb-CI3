@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Login_model');
         $this->load->library('session');
@@ -32,6 +34,10 @@ class Login extends CI_Controller {
             redirect('home');
         } else {
             // Redirect ke login dengan pesan error
+            // Setelah verifikasi login berhasil
+            $role = $user['role'];  // ambil role dari database
+            $this->session->set_userdata(['username' => $user['username'], 'role' => $role]);
+
             $this->session->set_flashdata('error', 'Username atau Password salah');
             redirect('login');
         }

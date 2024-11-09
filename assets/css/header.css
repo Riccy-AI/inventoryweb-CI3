@@ -1,59 +1,64 @@
+/* General Body Styling */
 body {
     margin: 0;
+    padding: 0; /* Menghilangkan padding default */
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa; /* Warna latar belakang yang lembut */
+    background-color: #b9bdc1; /* Soft background color */
 }
 
+/* Menghilangkan jarak berlebihan pada bagian atas dan bawah container */
 .container {
-    padding: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem; /* Memberikan padding hanya untuk sisi kiri dan kanan */
 }
 
+/* Navbar Styling */
 .navbar {
-    background-color: #ffffff; /* Warna latar belakang navbar */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk memberikan kedalaman */
+    background-color: #000000; /* Dark background for navbar */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+    margin-bottom: 0; /* Menghilangkan jarak kosong di bawah navbar */
+    padding: 0.5rem 1rem; /* Padding vertikal lebih kecil untuk navbar */
 }
 
 .navbar-brand img {
-    margin-right: 1rem; /* Jarak antara logo dan teks */
     width: 80px;
     height: auto;
+    margin-right: 1rem; /* Jarak antara logo dan teks */
 }
 
-.navbar-brand h2 {
-    padding: 0;
-    color: #343a40;
-    font-size: 1.5rem;
-}
-
+/* Navbar Links */
 .navbar-nav .nav-link {
-    color: #343a40; /* Warna teks link */
-    margin: 0 1rem; /* Jarak horizontal antar link */
+    margin: 0 1.5rem; /* Sedikit mengurangi jarak horizontal antar link */
     transition: color 0.3s;
 }
 
-.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-    color: blue; /* Warna saat hover */
-    text-decoration: underline; /* Garis bawah saat hover */
+    color: blue;
+    text-decoration: underline;
 }
 
 .navbar-nav .nav-link.active {
     font-weight: bold;
-    color: #007bff; /* Warna link aktif */
+    color: #007bff;
 }
 
+/* Navbar Toggler */
 .navbar-toggler {
-    border: none; /* Menghilangkan border default */
+    border: none;
 }
 
 .navbar-toggler-icon {
-    background-color: #343a40; /* Warna icon toggle */
+    background-color: #343a40;
 }
 
+/* Dropdown Menu Styling */
 .dropdown-menu {
     background-color: #ffffff;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .dropdown-item:hover {

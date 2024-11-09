@@ -6,14 +6,14 @@ class Supplier extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Supplier_model', 'supplier_model'); // memastikan alias model benar
+        $this->load->model('Supplier_model', 'supplier_model'); 
         $this->load->library('form_validation');
     }
 
     public function index()
     {
         $data['judul'] = 'Supplier';
-        $data['supplier'] = $this->supplier_model->getAllSupplier(); // menggunakan alias model yang benar
+        $data['supplier'] = $this->supplier_model->getAllSupplier();
         $this->load->view('templates/header', $data);
         $this->load->view('supplier/index', $data);
         $this->load->view('templates/footer');
@@ -33,7 +33,7 @@ class Supplier extends CI_Controller
             $this->load->view('supplier/tambah', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->supplier_model->tambahDataSupplier(); // menggunakan alias model yang benar
+            $this->supplier_model->tambahDataSupplier(); 
             $this->session->set_flashdata('flash', 'Ditambahkan');
             redirect('supplier');
         }

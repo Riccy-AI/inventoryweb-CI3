@@ -25,6 +25,7 @@
                             <input type="text" name="cp" class="form-control" id="cp">
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary float">Tambah data</button>
+                        <a href="<?= base_url('supplier'); ?>" class="btn btn-danger">Batal</a>
                     </form>
                 </div>
             </div>

@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary">
 
-
-    </nav>
+    <div class="background-image">
+        <nav class="navbar bg-body-tertiary">
+        </nav>
+    </div>

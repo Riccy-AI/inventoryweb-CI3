@@ -11,4 +11,10 @@ class Login_model extends CI_Model {
 
         return $query->row(); // Mengembalikan data user jika ditemukan
     }
+    public function cek_akses($role_required) {
+        $user_role = $this->session->userdata('role');
+        if ($user_role != $role_required) {
+            redirect('login'); // Kembali ke login jika role tidak sesuai
+        }
+    }
 }
