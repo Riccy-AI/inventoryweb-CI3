@@ -15,6 +15,7 @@ class BarangMasuk extends CI_Controller
     {
         $data['judul'] = 'Barang Masuk';
         $data['barang_masuk'] = $this->barangmasuk_model->getAllBarangMasuk();
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
         $this->load->view('barang_masuk/index');
         $this->load->view('templates/footer');

@@ -13,12 +13,16 @@
                             <input type="text" name="id_barang" class="form-control" id="id_barang">
                         </div>
                         <div class="form-group">
+                            <label for="id_user" class="form-label">ID User</label>
+                            <input type="text" name="id_user" class="form-control" id="id_user">
+                        </div>
+                        <div class="form-group">
                             <label for="nama_barang" class="form-label">Nama Barang</label>
                             <input type="text" name="nama_barang" class="form-control" id="nama_barang">
                         </div>
                         <div class="form-group">
-                            <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                            <input type="text" name="harga_satuan" class="form-control" id="harga_satuan">
+                            <label for="harga_satuan" class="form-label">Jumlah Barang</label>
+                            <input type="text" name="jmlh_barang" class="form-control" id="jmlh_barang">
                         </div>
                         <div class="form-group">
                             <label for="deskripsi" class="form-label">Deskripsi</label>

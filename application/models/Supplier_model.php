@@ -38,4 +38,9 @@ class Supplier_model extends CI_Model
         $this->db->update('supplier', $data);
         return $this->db->get_where('supplier', ['id_supplier' => $id_supplier])->row_array();
     }
+
+    public function countSupplier()
+    {
+        return $this->db->count_all('supplier');
+    }
 }

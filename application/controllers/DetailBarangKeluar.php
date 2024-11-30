@@ -15,6 +15,7 @@ class DetailBarangKeluar extends CI_Controller
     {
         $data['judul'] = 'Detail Barang Keluar';
         $data['detail_barang_keluar'] = $this->detailbarangkeluar_model->getAllDetailBarangKeluar();
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
         $this->load->view('detail_barangkeluar/index');
         $this->load->view('templates/footer');

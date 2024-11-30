@@ -30,36 +30,41 @@
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Master Barang</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="<?= base_url('supplier'); ?>">Supplier</a></li>
                 <li><a class="dropdown-item" href="<?= base_url('barang'); ?>">Data Barang</a></li>
-                <li><a class="dropdown-item" href="<?= base_url('barangmasuk'); ?>">Barang Masuk</a></li>
-                <li><a class="dropdown-item" href="<?= base_url('barangkeluar'); ?>">Barang Keluar</a></li>
+                <?php if ($role === '"admin"'): ?>
+                  <li><a class="dropdown-item" href="<?= base_url('supplier'); ?>">Supplier</a></li>
+                  <li><a class="dropdown-item" href="<?= base_url('barangmasuk'); ?>">Barang Masuk</a></li>
+                  <li><a class="dropdown-item" href="<?= base_url('barangkeluar'); ?>">Barang Keluar</a></li>
+                <?php endif; ?>
               </ul>
             </div>
 
             <!-- Detail Barang Dropdown -->
-            <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Detail Barang</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="<?= base_url('detailbarangmasuk'); ?>">Detail Barang Masuk</a></li>
-                <li><a class="dropdown-item" href="<?= base_url('detailbarangkeluar'); ?>">Detail Barang Keluar</a></li>
-              </ul>
-            </div>
+            <?php if ($role === '"admin"'): ?>
+              <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Detail Barang</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="<?= base_url('detailbarangmasuk'); ?>">Detail Barang Masuk</a></li>
+                  <li><a class="dropdown-item" href="<?= base_url('detailbarangkeluar'); ?>">Detail Barang Keluar</a></li>
+                </ul>
+              </div>
           </div>
+        <?php endif; ?>
 
-          <!-- User Dropdown -->
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2 d-none d-lg-inline text-black-500">Douglas McGee</span>
-                <img class="img-profile rounded-circle" src="<?= base_url('assets/icon/man.png'); ?>" width="30" height="30" alt="Profile">
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="<?= base_url('login'); ?>"><i class="fas fa-cogs fa-sm fa-fw me-2 text-black-400"></i>Log Out</a></li>
-
-              </ul>
-            </li>
-          </ul>
+        <!-- User Dropdown -->
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                <?= ucfirst($this->session->userdata('login_session')['role']); ?>
+              </span>
+              <img class="img-profile rounded-circle" src="<?= base_url('assets/icon/man.png'); ?>" width="30" height="30" alt="Profile">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="<?= base_url('user/logout'); ?>"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-black-400"></i>Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
         </div>
       </div>
     </nav>

@@ -40,4 +40,16 @@ class DetailBarangKeluar_model extends CI_Model
         $this->db->update('detail_barang_keluar', $data);
         return $this->db->get_where('detail_barang_keluar', ['id_detail_barang_keluar' => $id_detail_barang_keluar])->row_array();
     }
+
+    public function countDetailBarangKeluar()
+    {
+        return $this->db->count_all('detail_barang_keluar');
+    }
+
+    public function getTotalDetailBarangKeluar()
+    {
+        $this->db->select_sum('jmlh_keluar');
+        $query = $this->db->get('detail_barang_keluar');
+        return $query->row()->jmlh_keluar;
+    }
 }

@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class BarangKeluar extends CI_Controller {
+class BarangKeluar extends CI_Controller
+{
 
     public function __construct()
     {
@@ -14,6 +15,7 @@ class BarangKeluar extends CI_Controller {
     {
         $data['judul'] = 'Barang Keluar';
         $data['barang_keluar'] = $this->barangkeluar_model->getAllBarangKeluar();
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
         $this->load->view('barang_keluar/index');
         $this->load->view('templates/footer');
@@ -31,8 +33,7 @@ class BarangKeluar extends CI_Controller {
             $this->load->view('templates/header', $data);
             $this->load->view('barang_keluar/tambah', $data);
             $this->load->view('templates/footer');
-        } 
-        else {
+        } else {
             $this->barangkeluar_model->tambahDataBarangKeluar();
             $this->session->set_flashdata('flash', 'Ditambahkan');
             redirect('barangkeluar');

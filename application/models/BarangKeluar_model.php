@@ -1,8 +1,9 @@
 <?php
 
-class BarangKeluar_model extends CI_Model {
+class BarangKeluar_model extends CI_Model
+{
 
-    public function getAllBarangKeluar() 
+    public function getAllBarangKeluar()
     {
         // Mengambil semua data dari tabel
         $query = $this->db->get('barang_keluar');
@@ -15,7 +16,7 @@ class BarangKeluar_model extends CI_Model {
             'id_barang_keluar' => $this->input->post('id_barang_keluar', true),
             'id_user' => $this->input->post('id_user', true),
             'tanggal_keluar' => $this->input->post('tanggal_keluar', true)
-            ];
+        ];
 
         return $this->db->insert('barang_keluar', $data);
     }

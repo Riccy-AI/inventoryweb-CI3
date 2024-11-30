@@ -28,7 +28,13 @@ class Barang_model extends CI_Model
         $this->db->delete('barang');
     }
 
+    #untuk edit
     public function getBarangById($id_barang)
+    {
+        return $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
+    }
+
+    public function updateBarangById($id_barang)
     {
         $data = [
             'id_barang' => $this->input->post('id_barang', true),
@@ -37,8 +43,7 @@ class Barang_model extends CI_Model
             'deskripsi' => $this->input->post('deskripsi', true)
         ];
         $this->db->where('id_barang', $id_barang);
-        $this->db->update('barang', $data);
-        return $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
+        return $this->db->update('barang', $data);
     }
 
     public function get_barang_count_by_category()
@@ -48,5 +53,16 @@ class Barang_model extends CI_Model
         $this->db->group_by('jmlh_barang');
         $query = $this->db->get('barang'); // Ganti dengan tabel sesuai kebutuhan
         return $query->result_array();
+    }
+
+    public function countBarang()
+    {
+        return $this->db->count_all('barang');
+    }
+
+    public function updateJmlhBarang($id_barang, $quantity)
+    {
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('barang', ['jmlh_barang' => $quantity]);
     }
 }

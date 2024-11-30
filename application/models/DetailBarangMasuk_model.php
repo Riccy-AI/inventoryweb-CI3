@@ -42,4 +42,16 @@ class DetailBarangMasuk_model extends CI_Model
         $this->db->update('detail_barang_masuk', $data);
         return $this->db->get_where('detail_barang_masuk', ['id_detail_barang_masuk' => $id_detail_barang_masuk])->row_array();
     }
+
+    public function countDetailBarangMasuk()
+    {
+        return $this->db->count_all('detail_barang_masuk');
+    }
+
+    public function getTotalDetailBarangMasuk()
+    {
+        $this->db->select_sum('jmlh_masuk');
+        $query = $this->db->get('detail_barang_masuk');
+        return $query->row()->jmlh_masuk;
+    }
 }
