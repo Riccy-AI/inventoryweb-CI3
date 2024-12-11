@@ -15,6 +15,7 @@ class DetailBarangMasuk extends CI_Controller
     {
         $data['judul'] = 'Detail Barang Masuk';
         $data['detail_barang_masuk'] = $this->detailbarangmasuk_model->getAllDetailBarangMasuk();
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
         $this->load->view('detail_barangmasuk/index');
         $this->load->view('templates/footer');
@@ -23,6 +24,8 @@ class DetailBarangMasuk extends CI_Controller
     public function tambah()
     {
         $data['judul'] = 'Tambah Data Detail Barang Masuk';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
+
 
         $this->form_validation->set_rules('id_detail_barang_masuk', 'ID Detail Barang Masuk', 'required');
         $this->form_validation->set_rules('id_barang_masuk', 'ID Barang Masuk', 'required');
@@ -44,7 +47,7 @@ class DetailBarangMasuk extends CI_Controller
     public function hapus($id_detail_barang_masuk)
     {
 
-        $this->detailbarangmasuk_model->hapusDataBarangMasuk($id_detail_barang_masuk);
+        $this->detailbarangmasuk_model->hapusDataDetailBarangMasuk($id_detail_barang_masuk);
         $this->session->set_flashdata('flash', 'Di hapus');
         redirect('detailbarangmasuk');
     }
@@ -52,6 +55,7 @@ class DetailBarangMasuk extends CI_Controller
     public function edit($id_detail_barang_masuk)
     {
         $data['judul'] = 'Edit Data Detail Barang Masuk';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['detail_barang_masuk'] = $this->detailbarangmasuk_model->getDetailBarangMasukById($id_detail_barang_masuk);
 
         // Validasi input
@@ -69,8 +73,8 @@ class DetailBarangMasuk extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Memanggil model untuk memperbarui data supplier
-            $this->detailbarangmasuk_model->getDetailBarangMasukById($id_detail_barang_masuk);
-            $this->session->set_flashdata('flash', 'Diubah');
+            $this->detailbarangmasuk_model->updateDetailBarangMasukById($id_detail_barang_masuk);
+            $this->session->set_flashdata('flash_success', 'Data berhasil diperbarui');
             redirect('detailbarangmasuk');
         }
     }

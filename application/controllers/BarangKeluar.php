@@ -8,7 +8,7 @@ class BarangKeluar extends CI_Controller
     {
         parent::__construct();
         $this->load->model('BarangKeluar_model', 'barangkeluar_model');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation', 'session');
     }
 
     public function index()
@@ -24,6 +24,7 @@ class BarangKeluar extends CI_Controller
     public function tambah()
     {
         $data['judul'] = 'Tambah Data Barang Keluar';
+
 
         $this->form_validation->set_rules('id_barang_keluar', 'ID Barang Keluar', 'required');
         $this->form_validation->set_rules('id_user', 'ID User', 'required');
@@ -41,7 +42,8 @@ class BarangKeluar extends CI_Controller
     }
     public function hapus($id_barang_keluar)
     {
-
+        $data['judul'] = 'Hapus Data Barang Keluar';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->barangkeluar_model->hapusDataBarangKeluar($id_barang_keluar);
         $this->session->set_flashdata('flash', 'Di hapus');
         redirect('barangkeluar');
@@ -49,7 +51,8 @@ class BarangKeluar extends CI_Controller
 
     public function edit($id_barang_keluar)
     {
-        $data['judul'] = 'Edit Data Barang keluar';
+        $data['judul'] = 'Ubah Data Barang keluar';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['barang_keluar'] = $this->barangkeluar_model->getBarangKeluarById($id_barang_keluar);
 
         // Validasi input
@@ -64,8 +67,8 @@ class BarangKeluar extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Memanggil model untuk memperbarui data supplier
-            $this->barangkeluar_model->getBarangKeluarById($id_barang_keluar);
-            $this->session->set_flashdata('flash', 'Diubah');
+            $this->barangkeluar_model->updateBarangKeluarById($id_barang_keluar);
+            $this->session->set_flashdata('flash_success', 'Data barang berhasil diperbarui');
             redirect('barangkeluar');
         }
     }

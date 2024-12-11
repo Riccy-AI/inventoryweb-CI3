@@ -24,6 +24,8 @@ class DetailBarangKeluar extends CI_Controller
     public function tambah()
     {
         $data['judul'] = 'Tambah Data Detail Barang Keluar';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
+
 
         $this->form_validation->set_rules('id_detail_barang_keluar', 'ID Detail Barang Keluar', 'required');
         $this->form_validation->set_rules('id_barang', 'ID Barang', 'required');
@@ -51,6 +53,7 @@ class DetailBarangKeluar extends CI_Controller
     public function edit($id_detail_barang_keluar)
     {
         $data['judul'] = 'Edit Data Detail Barang Keluar';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['detail_barang_keluar'] = $this->detailbarangkeluar_model->getDetailBarangKeluarById($id_detail_barang_keluar);
 
         // Validasi input
@@ -68,8 +71,8 @@ class DetailBarangKeluar extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Memanggil model untuk memperbarui data supplier
-            $this->detailbarangkeluar_model->getDetailBarangKeluarById($id_detail_barang_keluar);
-            $this->session->set_flashdata('flash', 'Diubah');
+            $this->detailbarangkeluar_model->updateDetailBarangKeluarById($id_detail_barang_keluar);
+            $this->session->set_flashdata('flash_success', 'Data barang berhasil diperbarui');
             redirect('detailbarangkeluar');
         }
     }

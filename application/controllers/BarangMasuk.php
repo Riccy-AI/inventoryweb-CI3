@@ -8,7 +8,7 @@ class BarangMasuk extends CI_Controller
     {
         parent::__construct();
         $this->load->model('BarangMasuk_model', 'barangmasuk_model');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation', 'session');
     }
 
     public function index()
@@ -24,6 +24,7 @@ class BarangMasuk extends CI_Controller
     public function tambah()
     {
         $data['judul'] = 'Tambah Data Barang Masuk';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
 
         $this->form_validation->set_rules('id_barang_masuk', 'ID Barang Masuk', 'required');
         $this->form_validation->set_rules('id_user', 'ID User', 'required');
@@ -52,6 +53,7 @@ class BarangMasuk extends CI_Controller
     public function edit($id_barang_masuk)
     {
         $data['judul'] = 'Edit Data Barang Masuk';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['barang_masuk'] = $this->barangmasuk_model->getBarangMasukById($id_barang_masuk);
 
         // Validasi input
@@ -68,8 +70,8 @@ class BarangMasuk extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Memanggil model untuk memperbarui data supplier
-            $this->barangmasuk_model->getBarangMasukById($id_barang_masuk);
-            $this->session->set_flashdata('flash', 'Diubah');
+            $this->barangmasuk_model->updateBarangMasukById($id_barang_masuk);
+            $this->session->set_flashdata('flash_success', 'Data barang berhasil diperbarui');
             redirect('barangmasuk');
         }
     }

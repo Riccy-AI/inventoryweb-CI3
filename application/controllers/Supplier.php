@@ -28,7 +28,7 @@ class Supplier extends CI_Controller
 
     public function tambah()
     {
-
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         if ($this->role !== '"admin"') {
             $this->session->set_flashdata('flash_error', 'Anda tidak memiliki akses untuk tambah data');
             redirect('supplier');
@@ -73,6 +73,7 @@ class Supplier extends CI_Controller
         }
 
         $data['judul'] = 'Edit Data Supplier';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['supplier'] = $this->supplier_model->getSupplierById($id_supplier);
 
         // Validasi input
@@ -88,7 +89,7 @@ class Supplier extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Memanggil model untuk memperbarui data supplier
-            $this->supplier_model->getSupplierById($id_supplier);
+            $this->supplier_model->updateSupplierById($id_supplier);
             $this->session->set_flashdata('flash_success', 'Data Supplier berhasil diperbarui');
             redirect('supplier');
         }

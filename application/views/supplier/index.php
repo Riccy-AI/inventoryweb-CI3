@@ -8,6 +8,7 @@
         </div>
     <?php endif; ?>
 
+    <!-- Tombol Tambah Data -->
     <div class="row">
         <div class="col-md-12 d-flex justify-content-end mb-3">
             <a href="<?= base_url(); ?>supplier/tambah" class="btn btn-success">Tambah Data Supplier</a>
@@ -34,10 +35,10 @@
                         <td><?= $sup['nama_supplier']; ?></td>
                         <td><?= $sup['alamat']; ?></td>
                         <td><?= $sup['cp']; ?></td>
-                        <td class="text-center">
+                        <td class="text">
                             <a href="<?= base_url(); ?>supplier/edit/<?= $sup['id_supplier']; ?>"
-                                class="btn btn-primary btn-sm" title="Edit Data" onclick="return confirm('Yakin ingin edit data ini?')">
-                                Edit
+                                class="btn btn-primary btn-sm" title="Edit Data" onclick="return confirm('Yakin ingin ubah data ini?')">
+                                Ubah
                             </a>
                             <a href="<?= base_url(); ?>supplier/hapus/<?= $sup['id_supplier']; ?>"
                                 class="btn btn-danger btn-sm ms-2" title="Hapus Data" onclick="return confirm('Yakin ingin menghapus data ini?')">
@@ -53,6 +54,4 @@
             <?php endif; ?>
         </tbody>
     </table>
-</div>
-</div>
 </div>

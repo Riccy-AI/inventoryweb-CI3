@@ -31,6 +31,11 @@ class DetailBarangMasuk_model extends CI_Model
 
     public function getDetailBarangMasukById($id_detail_barang_masuk)
     {
+        return $this->db->get_where('detail_barang_masuk', ['id_detail_barang_masuk' => $id_detail_barang_masuk])->row_array();
+    }
+
+    public function updateDetailBarangMasukById($id_detail_barang_masuk)
+    {
         $data = [
             'id_detail_barang_masuk' => $this->input->post('id_detail_barang_masuk', true),
             'id_barang_masuk' => $this->input->post('id_barang_masuk', true),
@@ -39,8 +44,7 @@ class DetailBarangMasuk_model extends CI_Model
             'harga_beli' => $this->input->post('harga_beli', true)
         ];
         $this->db->where('id_detail_barang_masuk', $id_detail_barang_masuk);
-        $this->db->update('detail_barang_masuk', $data);
-        return $this->db->get_where('detail_barang_masuk', ['id_detail_barang_masuk' => $id_detail_barang_masuk])->row_array();
+        return $this->db->update('detail_barang_masuk', $data);
     }
 
     public function countDetailBarangMasuk()

@@ -30,6 +30,11 @@ class BarangMasuk_model extends CI_Model
 
     public function getBarangMasukById($id_barang_masuk)
     {
+        return $this->db->get_where('barang_masuk', ['id_barang_masuk' => $id_barang_masuk])->row_array();
+    }
+
+    public function updateBarangMasukById($id_barang_masuk)
+    {
         $data = [
             'id_barang_masuk' => $this->input->post('id_barang_masuk', true),
             'id_user' => $this->input->post('id_user', true),
@@ -37,7 +42,6 @@ class BarangMasuk_model extends CI_Model
             'tanggal_masuk' => $this->input->post('tanggal_masuk', true)
         ];
         $this->db->where('id_barang_masuk', $id_barang_masuk);
-        $this->db->update('barang_masuk', $data);
-        return $this->db->get_where('barang_masuk', ['id_barang_masuk' => $id_barang_masuk])->row_array();
+        return $this->db->update('barang_masuk', $data);
     }
 }

@@ -36,7 +36,8 @@
                             <label for="harga_beli" class="form-label">Harga Beli</label>
                             <input type="text" name="harga_beli" class="form-control" id="harga_beli">
                         </div>
-                        <button type="submit" name="tambah" class="btn btn-primary float">Edit data</button>
+                        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                        <a href="<?= base_url('barangmasuk'); ?>" class="btn btn-danger mt-3">Batal</a>
                     </form>
                 </div>
             </div>

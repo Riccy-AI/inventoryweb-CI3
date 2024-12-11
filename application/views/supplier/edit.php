@@ -24,8 +24,8 @@
                             <label for="cp" class="form-label">Nomor Supplier</label>
                             <input type="text" name="cp" class="form-control" id="cp">
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="<?= base_url('supplier'); ?>" class="btn btn-danger">Batal</a>
+                        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                        <a href="<?= base_url('supplier'); ?>" class="btn btn-danger mt-3">Batal</a>
                     </form>
                 </div>
             </div>

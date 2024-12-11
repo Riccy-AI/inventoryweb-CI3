@@ -20,7 +20,8 @@
                             <label for="tanggal_keluar" class="form-label">Tanggal Keluar</label>
                             <input type="date" name="tanggal_keluar" class="form-control" id="tanggal_keluar">
                         </div>
-                        <button type="submit" name="tambah" class="btn btn-primary float">Edit data</button>
+                        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                        <a href="<?= base_url('barangkeluar'); ?>" class="btn btn-danger mt-3">Batal</a>
                     </form>
                 </div>
             </div>

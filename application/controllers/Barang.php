@@ -7,7 +7,8 @@ class Barang extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Barang_model', 'barang_model');
-        $this->load->library(['form_validation', 'session']);
+        $this->load->library(['form_validation', 'session', 'pdf']);
+
 
         // Periksa login dan dapatkan role user
         if (!$this->session->userdata('login_session')) {
@@ -76,7 +77,7 @@ class Barang extends CI_Controller
             redirect('barang');
         }
 
-        $data['judul'] = 'Edit Data Barang';
+        $data['judul'] = 'Ubah Data Barang';
         $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $data['barang'] = $this->barang_model->getBarangById($id_barang);
 
@@ -100,26 +101,149 @@ class Barang extends CI_Controller
         }
     }
 
-    public function updateQuantity()
+    public function pesanBarang()
     {
-        // Ambil data dari form
-        $id_barang = $this->input->post('id_barang'); // ID Barang
-        $action = $this->input->post('action');      // Aksi (increase atau decrease)
+        // Ambil input dari form
+        $id_barang = $this->input->post('id_barang');
+        $action = $this->input->post('action');
+        $input_quantity = $this->input->post('quantity');
+        $pesanan = $this->session->userdata('pesanan') ?? [];
 
-        // Ambil quantity saat ini dari session (default 1 jika tidak ada)
-        $quantity = $this->session->userdata('quantity_' . $id_barang) ?? 1;
+        // Ambil data barang dari database untuk validasi
+        $barang = $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
 
-        // Logika tambah atau kurangi quantity
-        if ($action === 'increase') {
-            $quantity++; // Tambah quantity
-        } elseif ($action === 'decrease' && $quantity > 1) {
-            $quantity--; // Kurangi quantity (tidak boleh kurang dari 1)
+        if (!$barang) {
+            redirect('barang'); // Redirect jika barang tidak ditemukan
         }
 
-        // Simpan quantity terbaru ke session
-        $this->session->set_userdata('quantity_' . $id_barang, $quantity);
+        // Ambil jumlah pesanan saat ini dari session atau 0 jika belum ada
+        $current_quantity = isset($pesanan[$id_barang]) ? $pesanan[$id_barang] : 0;
+
+        // Jika ada input langsung di `quantity`
+        if (!empty($input_quantity)) {
+            $input_quantity = (int)$input_quantity;
+            if ($input_quantity >= 0 && $input_quantity <= $barang['jmlh_barang']) {
+                $pesanan[$id_barang] = $input_quantity; // Update jumlah barang di session
+            } else if ($input_quantity == 0) {
+                unset($pesanan[$id_barang]); // Hapus pesanan jika jumlah 0
+            }
+        }
+        // Logika untuk tombol + dan -
+        elseif ($action === 'increase' && $current_quantity < $barang['jmlh_barang']) {
+            $pesanan[$id_barang] = $current_quantity + 1; // Tambah 1 ke jumlah barang
+        } elseif ($action === 'decrease' && $current_quantity > 0) {
+            $pesanan[$id_barang] = $current_quantity - 1; // Kurangi 1 dari jumlah barang
+        }
+
+        // Simpan pesanan ke session
+        $this->session->set_userdata('pesanan', $pesanan);
 
         // Redirect kembali ke halaman barang
         redirect('barang');
+    }
+
+
+
+
+    public function resetPesanan()
+    {
+        $this->session->unset_userdata('pesanan'); // Hapus data pesanan dari session
+        redirect('barang'); // Kembali ke halaman barang
+    }
+
+
+    public function formPenerima()
+    {
+        $data['judul'] = 'Form Penerima';
+        $data['role'] = $this->session->userdata('login_session')['role']; // Role pengguna dari session
+        $data['bagian'] = $this->db->get('bagian')->result_array(); // Ambil data dari tabel bagian
+        $data['pesanan'] = $this->session->userdata('pesanan') ?? []; // Ambil pesanan dari session
+
+        // Tampilkan header, form, dan footer
+        $this->load->view('templates/header', $data);
+        $this->load->view('barang/form_penerima', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // Simpan data penerima
+    public function simpanPenerima()
+    {
+        // Data dari form
+        $id_bagian = $this->input->post('id_bagian');
+        $nama_bagian = $this->input->post('nama_bagian');
+        $nama_penerima = $this->input->post('nama_penerima');
+        $tanggal_keluar = $this->input->post('tanggal_keluar');
+        $pesanan = $this->session->userdata('pesanan'); // Pesanan dari session
+
+        // Simpan ke session
+        $dataPenerima = [
+            'id_bagian' => $id_bagian,
+            'nama_bagian' => $nama_bagian,
+            'nama_penerima' => $nama_penerima,
+            'tanggal_keluar' => $tanggal_keluar,
+            'pesanan' => $pesanan,
+        ];
+        $this->session->set_userdata('penerima', $dataPenerima);
+
+        // Update jumlah barang di database berdasarkan pesanan
+        foreach ($pesanan as $id_barang => $jumlah) {
+            // Ambil data barang dari database
+            $barang = $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
+
+            if ($barang) {
+                // Kurangi jumlah barang di database
+                $new_quantity = $barang['jmlh_barang'] - $jumlah;
+
+                // Update database
+                $this->db->update('barang', ['jmlh_barang' => $new_quantity], ['id_barang' => $id_barang]);
+            }
+        }
+
+        // Redirect ke halaman cetak PDF
+        redirect('barang/cetakPDF');
+    }
+
+
+    public function cetakPDF()
+    {
+        // Ambil data penerima dan pesanan dari session
+        $dataPenerima = $this->session->userdata('penerima');
+        $pesanan = $this->session->userdata('pesanan') ?? [];
+
+        // Cek apakah data penerima ada
+        if (!$dataPenerima) {
+            echo "Data penerima tidak ditemukan.";
+            return;
+        }
+
+        // Ambil data barang berdasarkan ID dari pesanan
+        $barang = [];
+        foreach ($pesanan as $id_barang => $jumlah) {
+            $barangData = $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
+            if ($barangData) {
+                $barang[] = [
+                    'id_barang' => $barangData['id_barang'],
+                    'nama_barang' => $barangData['nama_barang'],
+                    'jmlh_barang' => $jumlah,
+                    'deskripsi' => $barangData['deskripsi']
+                ];
+            }
+        }
+
+        // Siapkan data untuk view PDF
+        $data = [
+            'penerima' => $dataPenerima,
+            'barang' => $barang
+        ];
+
+        // Load library PDF
+        $this->load->library('pdf');
+        $html = $this->load->view('barang/pdf_template', $data, true);
+
+        // Konfigurasi dan generate PDF
+        $this->pdf->loadHtml($html);
+        $this->pdf->setPaper('A4', 'portrait',);
+        $this->pdf->render();
+        $this->pdf->stream("pesanan_barang.pdf", ["Attachment" => false]);
     }
 }

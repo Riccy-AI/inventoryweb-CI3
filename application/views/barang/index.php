@@ -43,28 +43,35 @@
 
                             <?php if ($role === '"staff"'): ?>
                                 <!-- Form Counter -->
-                                <form method="post" action="<?= base_url('barang/updateQuantity'); ?>" class="d-inline">
+                                <form method="post" action="<?= base_url('barang/pesanBarang'); ?>" class="d-inline">
                                     <!-- Hidden Input untuk ID Barang -->
                                     <input type="hidden" name="id_barang" value="<?= $brg['id_barang']; ?>">
 
-                                    <!-- Tombol Kurangi -->
-                                    <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm">-</button>
+                                    <div class="input-group">
+                                        <!-- Tombol Kurangi -->
+                                        <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm">-</button>
 
-                                    <!-- Input Jumlah -->
-                                    <input type="text" name="quantity"
-                                        value="<?= $this->session->userdata('quantity_' . $brg['id_barang']) ?? 0; ?>"
-                                        class="form-control d-inline-block mx-2 text-center"
-                                        style="width: 60px;">
+                                        <!-- Input Jumlah Pesanan -->
+                                        <input type="text"
+                                            name="quantity"
+                                            value="<?= isset($this->session->userdata('pesanan')[$brg['id_barang']]) ? $this->session->userdata('pesanan')[$brg['id_barang']] : 0; ?>"
+                                            min="0"
+                                            max="<?= $brg['jmlh_barang']; ?>"
+                                            class="form-control d-inline-block mx-2 text-center"
+                                            style="width: 60px;">
 
-                                    <!-- Tombol Tambah -->
-                                    <button type="submit" name="action" value="increase" class="btn btn-outline-success btn-sm">+</button>
+                                        <!-- Tombol Tambah -->
+                                        <button type="submit" name="action" value="increase" class="btn btn-outline-success btn-sm">+</button>
+                                    </div>
                                 </form>
+
+
                             <?php endif; ?>
 
                             <?php if ($role === '"admin"'): ?>
                                 <a href="<?= base_url(); ?>barang/edit/<?= $brg['id_barang']; ?>"
-                                    class="btn btn-primary btn-sm ms-2" title="Edit Data" onclick="return confirm('Yakin ingin edit data ini?')">
-                                    Edit
+                                    class="btn btn-primary btn-sm ms-2" title="Edit Data" onclick="return confirm('Yakin ingin ubah data ini?')">
+                                    Ubah
                                 </a>
                                 <a href="<?= base_url(); ?>barang/hapus/<?= $brg['id_barang']; ?>"
                                     class="btn btn-danger btn-sm ms-2" title="Hapus Data" onclick="return confirm('Yakin ingin menghapus data ini?')">
@@ -81,4 +88,12 @@
             <?php endif; ?>
         </tbody>
     </table>
+    <?php if ($role === '"staff"'): ?>
+        <!-- Tombol Pesan dan Reset -->
+        <div class="text-end mt-3">
+            <a href="<?= base_url('barang/formPenerima'); ?>" class="btn btn-primary ms-2">Pesan</a>
+            <a href="<?= base_url('barang/resetPesanan'); ?>" class="btn btn-secondary">Reset</a>
+
+        </div>
+    <?php endif; ?>
 </div>

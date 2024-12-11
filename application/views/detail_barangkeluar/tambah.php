@@ -24,8 +24,8 @@
                             <label for="jmlh_keluar" class="form-label">Jumlah Keluar</label>
                             <input type="text" name="jmlh_keluar" class="form-control" id="jmlh_keluar">
                         </div>
-                        <button type="submit" name="tambah" class="btn btn-primary">Tambah data</button>
-                        <a href="<?= base_url('detailbarangkeluar'); ?>" class="btn btn-danger">Batal</a>
+                        <button type="submit" name="tambah" class="btn btn-primary mt-3">Tambah data</button>
+                        <a href="<?= base_url('detailbarangkeluar'); ?>" class="btn btn-danger mt-3">Batal</a>
                     </form>
                 </div>
             </div>

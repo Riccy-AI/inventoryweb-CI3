@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inventory | <?= $judul; ?></title>
   <link rel="stylesheet" href="<?= base_url('assets/css/header.css'); ?>">
@@ -31,6 +32,7 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Master Barang</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="<?= base_url('barang'); ?>">Data Barang</a></li>
+                <!-- Akses admin -->
                 <?php if ($role === '"admin"'): ?>
                   <li><a class="dropdown-item" href="<?= base_url('supplier'); ?>">Supplier</a></li>
                   <li><a class="dropdown-item" href="<?= base_url('barangmasuk'); ?>">Barang Masuk</a></li>
@@ -39,7 +41,7 @@
               </ul>
             </div>
 
-            <!-- Detail Barang Dropdown -->
+            <!-- Detail Barang Dropdown + Akses Admin -->
             <?php if ($role === '"admin"'): ?>
               <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Detail Barang</a>

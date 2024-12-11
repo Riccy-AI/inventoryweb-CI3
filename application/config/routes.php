@@ -53,5 +53,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'Login/index';
 $route['home'] = 'home/index';
 $route['supplier/edit/(:num)'] = 'supplier/edit/$1';
+$route['barang/formPenerima'] = 'barang/formPenerima';
+$route['barang/cetakPesanan'] = 'barang/cetakPesanan';
+$route['barang/cetak/(:num)'] = 'barang/cetakBarangKeluar/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
