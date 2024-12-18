@@ -103,45 +103,40 @@ class Barang extends CI_Controller
 
     public function pesanBarang()
     {
-        // Ambil input dari form
         $id_barang = $this->input->post('id_barang');
         $action = $this->input->post('action');
-        $input_quantity = $this->input->post('quantity');
+        $quantity = (int)$this->input->post('quantity');
         $pesanan = $this->session->userdata('pesanan') ?? [];
 
-        // Ambil data barang dari database untuk validasi
+        // Ambil data barang dari database
         $barang = $this->db->get_where('barang', ['id_barang' => $id_barang])->row_array();
 
         if (!$barang) {
-            redirect('barang'); // Redirect jika barang tidak ditemukan
+            redirect('barang'); // Jika barang tidak ditemukan
         }
 
-        // Ambil jumlah pesanan saat ini dari session atau 0 jika belum ada
-        $current_quantity = isset($pesanan[$id_barang]) ? $pesanan[$id_barang] : 0;
+        // Ambil jumlah pesanan yang ada di session atau 0 jika belum ada
+        $quantity = isset($pesanan[$id_barang]) ? $pesanan[$id_barang] : 0;
 
-        // Jika ada input langsung di `quantity`
-        if (!empty($input_quantity)) {
-            $input_quantity = (int)$input_quantity;
-            if ($input_quantity >= 0 && $input_quantity <= $barang['jmlh_barang']) {
-                $pesanan[$id_barang] = $input_quantity; // Update jumlah barang di session
-            } else if ($input_quantity == 0) {
-                unset($pesanan[$id_barang]); // Hapus pesanan jika jumlah 0
-            }
-        }
         // Logika untuk tombol + dan -
-        elseif ($action === 'increase' && $current_quantity < $barang['jmlh_barang']) {
-            $pesanan[$id_barang] = $current_quantity + 1; // Tambah 1 ke jumlah barang
-        } elseif ($action === 'decrease' && $current_quantity > 0) {
-            $pesanan[$id_barang] = $current_quantity - 1; // Kurangi 1 dari jumlah barang
+        if ($action === 'increase' && $quantity < $barang['jmlh_barang']) {
+            $quantity++;  // Menambah jumlah barang yang dipesan
+        } elseif ($action === 'decrease' && $quantity > 0) {
+            $quantity--;  // Mengurangi jumlah barang yang dipesan
         }
 
-        // Simpan pesanan ke session
-        $this->session->set_userdata('pesanan', $pesanan);
+        // Update session dengan nilai jumlah barang yang baru
+        if ($quantity > 0) {
+            $pesanan[$id_barang] = $quantity;  // Simpan ke session jika lebih dari 0
+        } else {
+            unset($pesanan[$id_barang]);  // Hapus pesanan jika jumlahnya 0
+        }
+
+        $this->session->set_userdata('pesanan', $pesanan);  // Update session pesanan
 
         // Redirect kembali ke halaman barang
         redirect('barang');
     }
-
 
 
 

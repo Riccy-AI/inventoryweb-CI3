@@ -14,7 +14,7 @@ class Supplier_model extends CI_Model
             'id_supplier' => $this->input->post('id_supplier', true),
             'nama_supplier' => $this->input->post('nama_supplier', true),
             'alamat' => $this->input->post('alamat', true),
-            'cp' => $this->input->post('cp', true)
+            'cp' => $this->input->post('cp')
         ];
 
         return $this->db->insert('supplier', $data);

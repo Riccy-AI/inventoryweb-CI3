@@ -39,6 +39,7 @@
                                     class="btn btn-primary btn-sm" onclick="return confirm('Yakin ingin edit?')">Ubah</a>
                                 <a href="<?= base_url(); ?>barangmasuk/hapus/<?= $brgm['id_barang_masuk']; ?>"
                                     class="btn btn-danger btn-sm ms-2" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                                <a href="<?= base_url('barangmasuk/detail/' . $brgm['id_barang_masuk']); ?>" class="btn btn-info btn-sm ms-2">Detail</a>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

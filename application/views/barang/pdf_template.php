@@ -88,7 +88,7 @@
 
     <div class="header">
         <h1>Form Penerima</h1>
-        <p>Perusahaan XYZ</p>
+        <p>Kantor Notaris Mochamad Fardiansyah S.HO.,M.Kn</p>
         <p>Jl. Raya No. 123, Kota ABC</p>
         <div class="divider"></div>
     </div>
@@ -106,6 +106,7 @@
     <table>
         <thead>
             <tr>
+                <th style="width: 10%;">No</th>
                 <th style="width: 20%;">ID Barang</th>
                 <th style="width: 40%;">Nama Barang</th>
                 <th style="width: 20%;">Jumlah Barang</th>
@@ -114,8 +115,12 @@
         </thead>
         <tbody>
             <?php if (!empty($barang)): ?>
-                <?php foreach ($barang as $b): ?>
+                <?php
+                $no = 1; // Inisialisasi nomor urut
+                foreach ($barang as $b):
+                ?>
                     <tr>
+                        <td><?= $no++; ?></td> <!-- Tampilkan nomor urut -->
                         <td><?= $b['id_barang']; ?></td>
                         <td><?= $b['nama_barang']; ?></td>
                         <td><?= $b['jmlh_barang']; ?></td>
@@ -124,11 +129,12 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4" style="text-align: center;">Tidak ada data barang.</td>
+                    <td colspan="5" style="text-align: center;">Tidak ada data barang.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
+
 
     <!-- Footer -->
     <div class="footer">

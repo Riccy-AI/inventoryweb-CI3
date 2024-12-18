@@ -18,11 +18,11 @@
                         </div>
                         <div class="form-group">
                             <label for="alamat" class="form-label">Alamat Supplier</label>
-                            <input type="text" name="alamat" class="form-control" id="alamats">
+                            <input type="text" name="alamat" class="form-control" id="alamat">
                         </div>
                         <div class="form-group">
                             <label for="cp" class="form-label">Nomor Supplier</label>
-                            <input type="text" name="cp" class="form-control" id="cp">
+                            <input type="number" name="cp" class="form-control" id="cp">
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary mt-3">Tambah data</button>
                         <a href="<?= base_url('supplier'); ?>" class="btn btn-danger mt-3">Batal</a>

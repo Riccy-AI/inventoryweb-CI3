@@ -7,6 +7,7 @@ class DetailBarangMasuk extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('BarangMasuk_model', 'barangmasuk_model');
         $this->load->model('DetailBarangMasuk_model', 'detailbarangmasuk_model');
         $this->load->library('form_validation');
     }
@@ -14,6 +15,7 @@ class DetailBarangMasuk extends CI_Controller
     public function index()
     {
         $data['judul'] = 'Detail Barang Masuk';
+        $data['barang_masuk'] = $this->barangmasuk_model->getAllBarangMasuk();
         $data['detail_barang_masuk'] = $this->detailbarangmasuk_model->getAllDetailBarangMasuk();
         $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
@@ -25,6 +27,9 @@ class DetailBarangMasuk extends CI_Controller
     {
         $data['judul'] = 'Tambah Data Detail Barang Masuk';
         $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
+        $data['barang_masuk'] = $this->barangmasuk_model->getAllBarangMasuk();
+        $data['detail_barang_masuk'] = $this->detailbarangmasuk_model->getDetailBarangMasukById($id_detail_barang_masuk);
+
 
 
         $this->form_validation->set_rules('id_detail_barang_masuk', 'ID Detail Barang Masuk', 'required');
@@ -44,6 +49,7 @@ class DetailBarangMasuk extends CI_Controller
             redirect('detailbarangmasuk');
         }
     }
+
     public function hapus($id_detail_barang_masuk)
     {
 
@@ -74,7 +80,7 @@ class DetailBarangMasuk extends CI_Controller
         } else {
             // Memanggil model untuk memperbarui data supplier
             $this->detailbarangmasuk_model->updateDetailBarangMasukById($id_detail_barang_masuk);
-            $this->session->set_flashdata('flash_success', 'Data berhasil diperbarui');
+            $this->session->set_flashdata('flash_success', 'Data barang berhasil diperbarui');
             redirect('detailbarangmasuk');
         }
     }

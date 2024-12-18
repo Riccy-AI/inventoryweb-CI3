@@ -6,14 +6,18 @@
             <label for="id_bagian">ID Bagian</label>
             <select name="id_bagian" id="id_bagian" class="form-control" required>
                 <?php foreach ($bagian as $b): ?>
-                    <option value="<?= $b['id_bagian']; ?>"><?= $b['id_bagian']; ?> - <?= $b['nama_bagian']; ?></option>
+                    <option value="<?= $b['id_bagian']; ?>"><?= $b['id_bagian']; ?> </option>
                 <?php endforeach; ?>
             </select>
         </div>
 
         <div class="form-group">
             <label for="nama_bagian">Nama Bagian</label>
-            <input type="text" name="nama_bagian" id="nama_bagian" class="form-control" required>
+            <select name="nama_bagian" id="nama_bagian" class="form-control" required>
+                <?php foreach ($bagian as $b): ?>
+                    <option value="<?= $b['nama_bagian']; ?>"><?= $b['nama_bagian']; ?> </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="form-group">

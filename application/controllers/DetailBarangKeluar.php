@@ -8,12 +8,14 @@ class DetailBarangKeluar extends CI_Controller
     {
         parent::__construct();
         $this->load->model('DetailBarangKeluar_model', 'detailbarangkeluar_model');
-        $this->load->library('form_validation');
+        $this->load->model('BarangKeluar_model', 'barangkeluar_model');
+        $this->load->library('form_validation', 'session');
     }
 
     public function index()
     {
         $data['judul'] = 'Detail Barang Keluar';
+        $data['barang_keluar'] = $this->barangkeluar_model->getAllBarangKeluar();
         $data['detail_barang_keluar'] = $this->detailbarangkeluar_model->getAllDetailBarangKeluar();
         $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
         $this->load->view('templates/header', $data);
@@ -25,6 +27,8 @@ class DetailBarangKeluar extends CI_Controller
     {
         $data['judul'] = 'Tambah Data Detail Barang Keluar';
         $data['role'] = $this->session->userdata('login_session')['role']; // Mengambil role dari session
+        $data['barang_keluar'] = $this->barangkeluar_model->getAllBarangKeluar();
+        $data['detail_barang_keluar'] = $this->detailbarangkeluar_model->getAllDetailBarangKeluar();
 
 
         $this->form_validation->set_rules('id_detail_barang_keluar', 'ID Detail Barang Keluar', 'required');

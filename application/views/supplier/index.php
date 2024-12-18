@@ -23,7 +23,7 @@
                 <th>ID Supplier</th>
                 <th>Nama Supplier</th>
                 <th>Alamat</th>
-                <th>Contact Person</th>
+                <th>Nomor Telepon</th>
                 <th>Aksi</th>
             </tr>
         </thead>

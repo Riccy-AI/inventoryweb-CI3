@@ -9,6 +9,7 @@
     <?php endif; ?>
 
     <!-- Tombol Tambah Data -->
+
     <div class="row">
         <div class="col-md-12 d-flex justify-content-end mb-3">
             <a href="<?= base_url(); ?>detailbarangkeluar/tambah" class="btn btn-success">Tambah Data Detail Barang Keluar</a>

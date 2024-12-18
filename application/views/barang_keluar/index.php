@@ -9,11 +9,13 @@
     <?php endif; ?>
 
     <!-- Tombol Tambah Data -->
-    <div class="row">
-        <div class="col-md-12 d-flex justify-content-end">
-            <a href="<?= base_url(); ?>barangkeluar/tambah" class="btn btn-success mb-3">Tambah Data Barang Keluar</a>
-        </div>
+    <?php if ($role === '"admin"'): ?>
 
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-end">
+                <a href="<?= base_url(); ?>barangkeluar/tambah" class="btn btn-success mb-3">Tambah Data Barang Keluar</a>
+            </div>
+        <?php endif; ?>
         <!-- Tabel Data Barang -->
         <h3>Data Barang Keluar</h3>
         <table class="table">
@@ -47,5 +49,5 @@
                 <?php endif; ?>
             </tbody>
         </table>
-    </div>
+        </div>
 </div>
